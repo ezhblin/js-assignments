@@ -259,7 +259,13 @@ function encodeToRot13(str) {
  *   isString(new String('test')) => true
  */
 function isString(value) {
-    return typeof(value) == 'string';
+    let str;
+    try {
+        str = value.valueOf();
+    } catch (e) {
+        str = value;
+    }
+    return typeof(str) == 'string';
 }
 
 
@@ -292,7 +298,7 @@ function getCardId(value) {
                 "'A♦','2♦','3♦','4♦','5♦','6♦','7♦','8♦','9♦','10♦','J♦','Q♦','K♦'," +
                 "'A♥','2♥','3♥','4♥','5♥','6♥','7♥','8♥','9♥','10♥','J♥','Q♥','K♥'," +
                 "'A♠','2♠','3♠','4♠','5♠','6♠','7♠','8♠','9♠','10♠','J♠','Q♠','K♠'";
-    return cards.split(',').indexOf(value)+1;
+    return cards.replaceAll("'", '').split(',').indexOf(value);
 }
 
 

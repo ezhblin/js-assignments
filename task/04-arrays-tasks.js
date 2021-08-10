@@ -549,10 +549,8 @@ function distinct(arr) {
  */
 function group(array, keySelector, valueSelector) {
    let functionMap = new Map();
-   return array.map((item) => addInMap(item));
-   function addInMap(item) {
-      
-   }
+   array.map((item) => functionMap.has(keySelector(item)) ?  functionMap.get(keySelector(item)).push(valueSelector(item)) : functionMap.set(keySelector(item), [valueSelector(item)]));
+   return functionMap;
 }
 
 
@@ -567,11 +565,11 @@ function group(array, keySelector, valueSelector) {
  *   [[1, 2], [3, 4], [5, 6]], (x) => x     =>   [ 1, 2, 3, 4, 5, 6 ]
  *   ['one','two','three'], x=>x.split('')  =>   ['o','n','e','t','w','o','t','h','r','e','e']
  */
-function selectMany(arr, childrenSelector) {
-    throw new Error('Not implemented');
+function selectMany(arr, childrenSelector) { 
+   let flatArr = new Array();
+   arr.map(childrenSelector).map(x => Array.isArray(x) ? x.map(x => flatArr.push(x)) : flatArr.push(x));
+   return flatArr;
 }
-
-
 /**
  * Returns an element from the multidimentional array by the specified indexes.
  *
@@ -585,7 +583,7 @@ function selectMany(arr, childrenSelector) {
  *   [[[ 1, 2, 3]]], [ 0, 0, 1 ]      => 2        (arr[0][0][1])
  */
 function getElementByIndexes(arr, indexes) {
-    throw new Error('Not implemented');
+   return  indexes.reduce((answer, x) => answer[x], arr);
 }
 
 
@@ -608,7 +606,15 @@ function getElementByIndexes(arr, indexes) {
  * 
  */
 function swapHeadAndTail(arr) {
-    throw new Error('Not implemented');
+   let head = arr.slice(0, Math.floor(arr.length/2));
+   let tail = arr.slice(Math.ceil(arr.length/2), arr.length+1); 
+   if (arr.length%2 == 0) {
+      return tail.concat(head);
+   } else if (arr.length == 1) {
+      return arr;
+   } else {
+      return tail.concat([arr[Math.floor(arr.length/2)]], head);
+   }
 }
 
 

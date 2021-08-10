@@ -118,7 +118,7 @@ function getRegexForSSN() {
  */
 function getPasswordValidator(minLength) {
    //return new RegExp('(?=\S*[0-9])(?=\S*[a-z])(?=\S*[A-Z])[a-zA-Z]{4,}');
-   return new RegExp('(?=\S+$)(?=.*\d)(?=.*[a-z])(?=.*[A-Z])([a-zA-Z0-9]{' + minLength + ',})', 'g');
+   return new RegExp('^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])([a-zA-Z0-9]{' + minLength + ',})$');
 }
 
 
